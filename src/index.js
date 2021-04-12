@@ -12,64 +12,53 @@ document.addEventListener("DOMContentLoaded", (event) => {
         .then(res => res.json())
         .then((dogResp) => {
             // console.log(dogResp);
-
             dogResp.message.forEach((Image) => {
 
                 let dogImg = document.createElement("img")
                 dogImg.src = Image
                 dogDiv.append(dogImg)
-
             })
-
         })
+
+
     fetch(breedUrl)
         .then(res => res.json())
         .then((response) => {
             // console.log(response)
             Object.keys(response.message).forEach((breedName) => {
                 let blankLi = document.createElement("li")
-
-                blankLi.append(breedName)
+                blankLi.innerText = breedName //same as // blankLi.append(breedName)
                 breedUl.append(blankLi)
-                blankLi.addEventListener("click", () => {
+
+                blankLi.addEventListener("click", (event) => {
                     blankLi.style.color = "red"
                 })
             })
-
         })
 
-    dropdown.addEventListener("click", (e) => {
+
+    dropdown.addEventListener("change", (event) => {
         fetch(breedUrl)
             .then(res => res.json())
             .then((response) => {
                 let dogBreedsArr = Object.keys(response.message);
+                // console.log(typeof dogBreedsArr) // object
 
-                let filteredArray = dogBreedsArr.filter(breed => {
-                    return breed.startsWith(e.target.value)
+                let filteredArray = dogBreedsArr.filter((breed) => {
+                    return breed.startsWith(event.target.value)
                 })
                 breedUl.innerText = ""
 
                 filteredArray.forEach((breed) => {
-                    makeLi(breed)
+                    let blankLi = document.createElement("li")
+                    blankLi.innerText = breed
+                    breedUl.append(blankLi)
+                    blankLi.addEventListener("click", (event) => {
+                        blankLi.style.color = "red"
+                    })
                 })
-
-            }
-
-
-
-        // console.log(e)
-        // if (e.target.value === "a") {
-
-        // console.log(filter((names) => names.startsWith("a")))
-
-        // console.log(startsWithA);
-        // }
+            })
     })
-
-    // const startsWithN = countries.filter((country) => country.startsWith("N"));
-
-
-
 
 
 
